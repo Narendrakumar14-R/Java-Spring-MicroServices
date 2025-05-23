@@ -1,6 +1,7 @@
 package com.chase.entity;
 import java.time.LocalDate;
 
+
 public class Loans {
 
 
@@ -12,6 +13,7 @@ public class Loans {
     private LocalDate loanStartDate;  
     private LocalDate loanEndDate;   
     private Boolean status;
+    
     
     
 	public Long getLoanId() {
