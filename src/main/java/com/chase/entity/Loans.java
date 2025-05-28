@@ -1,8 +1,10 @@
 package com.chase.entity;
 import java.time.LocalDate;
 
+import com.chase.Test;
 
-public class Loans {
+
+public class Loans extends Test {
 
 
     private Long loanId;              
@@ -13,6 +15,9 @@ public class Loans {
     private LocalDate loanStartDate;  
     private LocalDate loanEndDate;   
     private Boolean status;
+    protected String bankname;
+   
+    
     // hello
     
     
@@ -65,5 +70,8 @@ public class Loans {
 	}
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+	public void test() {
+		System.out.println("Hello in Loans class");
 	}
 	}
