@@ -10,4 +10,6 @@ public interface LoansService {
 	public List<Loans> getAllLoans();
 	public Loans updateLoans(Loans loan);
 	public Loans deleteLoans(Long LoanId);
+
 }
+

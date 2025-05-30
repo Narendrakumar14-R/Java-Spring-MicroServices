@@ -4,6 +4,7 @@ import com.chase.loanUtil.DemoPolymorphism;
 
 public class Test {
 	public static void main(String[] args) {
+		Loans loan = new Loans();
 		Test t1 = new Test();
 		Test t2 = new Loans();
 		Test t3 = new DemoPolymorphism();
