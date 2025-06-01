@@ -3,17 +3,20 @@ package com.chase.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.chase.entity.Loans;
 import com.chase.repository.LoansRepository;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 
+
+@Service
 public class LoansServiceImpl implements LoansService{
 	
 	@Autowired
 	LoansRepository loansRepository;
-	
+	 
 
 	@Override
 	public Loans addLoans(Loans loan) {
@@ -36,20 +39,21 @@ public class LoansServiceImpl implements LoansService{
 				System.out.println("The customer has other loans");
 			}
 		}
-		return null;
+		return loansRepository.save(loan);
 	}
 
 	@Override
-	public Loans getLoans(Long LoanId) {
+	public Loans getLoans(Long loanId) {
 		// TODO Auto-generated method stub
-		if (LoanId != null && LoanId > 0) {
+		if (loanId != null && loanId > 0) {
 			System.out.println("Customer having Loan");
+			return loansRepository.findById(loanId).orElse(null);
 		}
 		else {
 			System.out.println("Customer don't have a Loan");
-			return loansRepository.getById(LoanId);
+			return null;
 		}
-		return null;
+		
 	}
 
 

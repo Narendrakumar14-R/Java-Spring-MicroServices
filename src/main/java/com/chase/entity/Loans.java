@@ -3,11 +3,21 @@ import java.time.LocalDate;
 
 import com.chase.Test;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name= "loans")
 public class Loans extends Test {
 
 
-    private Long loanId;              
+@Id
+@GeneratedValue(strategy =GenerationType.AUTO )
+	
+	private Long loanId;              
     private String loanType;         
     private Double ROI;              
     private Long customerId;          
