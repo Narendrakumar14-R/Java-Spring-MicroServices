@@ -1,8 +1,16 @@
 package com.chase.entity;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import com.chase.Test;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,9 +34,38 @@ public class Loans extends Test {
     private LocalDate loanEndDate;   
     private Boolean status;
     protected String bankname;
+    private String email;
+    
+    
+    
+   @ElementCollection
+   private List<String> phoneNumbers = new ArrayList<>();
+   @ElementCollection
+   private Map<String,Double> loanInterest = new HashMap<>();
+   @ElementCollection
+   private Set<String> loanTypes= new HashSet<>();
    
     
     // hello
+   public List<String> getPhoneNumbers() {
+		return phoneNumbers;
+		}
+	   public void setPhoneNumbers(List<String> phoneNumbers) {
+		this.phoneNumbers = phoneNumbers;
+	   }
+		public Map<String,Double> getLoanInterest() {
+			return loanInterest;
+		}
+		public void setLoanInterest(Map<String,Double> loanInterest) {
+			this.loanInterest = loanInterest;
+		}
+		public Set<String> getLoanTypes() {
+			return loanTypes;
+		}
+		public void setLoanTypes(Set<String> loanTypes) {
+			this.loanTypes = loanTypes;
+		}
+
     
     
     
@@ -81,7 +118,15 @@ public class Loans extends Test {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-	public void test() {
+	/*public void test() {
 		System.out.println("Hello in Loans class");
+	}*/
+	public String getEmail() {
+		return email;
 	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+
 	}

@@ -9,7 +9,7 @@ public interface LoansService {
 	public Loans getLoans(Long LoanId);
 	public List<Loans> getAllLoans();
 	public Loans updateLoans(Loans loan);
-	public Loans deleteLoans(Long LoanId);
+	public void deleteLoans(Long LoanId);
 
 }
 

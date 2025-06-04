@@ -43,7 +43,7 @@ public class LoansController {
 	}
 	
 	@DeleteMapping("/deleteLoans/{loanId}")
-	public Loans deleteLoans(@PathVariable("loanId")  Long loanId) {
-		return loanService.deleteLoans(loanId);
+	public void deleteLoans(@PathVariable("loanId")  Long loanId) {
+		 loanService.deleteLoans(loanId);
 	}
 }
