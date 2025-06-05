@@ -1,5 +1,6 @@
 package com.chase.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,6 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -16,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chase.entity.Loans;
+import com.chase.loanUtil.GlobalExceptionHandler;
+import com.chase.loanUtil.LoanNotFoundException;
 import com.chase.repository.LoansRepository;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
@@ -32,7 +36,15 @@ public class LoansServiceImpl implements LoansService{
 	public Loans addLoans(Loans loan) {
 		// TODO Auto-generated method stub
 		
-		
+		try {
+			
+			//File f = new File("c:file123.txt");
+			//f.getAbsolutePath();
+			/*int i = 1/0;
+			System.out.println(i);
+			prints the ArithmeticException in the except block*/
+			//int i ="kumar";
+			
 		List<String> arrayList = new ArrayList<>(loan.getPhoneNumbers());
 		List<String> linkedList = new LinkedList<>(loan.getPhoneNumbers());
 		
@@ -51,10 +63,25 @@ public class LoansServiceImpl implements LoansService{
 		
 		System.out.println("ArrayList operation time" +(endArray - startArray)+" ns");
 		System.out.println("LinkedList operation time" +(endLinked - startLinked)+" ns");
+		}
+		//catch(NumberFormatException e) {
+			//GlobalExceptionHandler.IllegalArgumentException(new IllegalArgumentException("Invalid Input", e));
+			//e.printStackTrace();
+			//System.out.println("exception called");
+		//}
+		finally {
+			System.out.println("The finally block executes");
+		}
 		
 		
 		
-		
+		if(loan.getEmail() == null || !loan.getEmail().contains("@"))
+		{
+			System.out.println("Loan having invalid emial format");
+			throw new LoanNotFoundException("Loan having invalid email format ot emial is null");
+			/* prints WARN 12388 --- [Chase_Service] [nio-8080-exec-7] .m.m.a.ExceptionHandlerExceptionResolver 
+			  : Resolved [com.chase.loanUtil.LoanNotFoundException: Loan having invalid email format ot emial is null]*/
+		}
 		
 		
 		if ( loan.getLoanType() == null) {
@@ -139,6 +166,15 @@ public class LoansServiceImpl implements LoansService{
 	@Override
 	public Loans updateLoans(Loans loan) {
 		// TODO Auto-generated method stub
+		
+		Optional<Loans> l= loansRepository.findById(loan.getLoanId());
+		if(l.isEmpty()) {
+			throw new LoanNotFoundException("Loan not found");
+			
+		}
+		
+		
+		
 		
 		Set<String> rawSet = loan.getLoanTypes();
 		rawSet.removeIf(type -> type == null || type.trim().isEmpty());
