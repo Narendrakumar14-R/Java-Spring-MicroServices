@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chase.entity.Loans;
+import com.chase.loanUtil.EmailNotificationTask;
 import com.chase.loanUtil.GlobalExceptionHandler;
 import com.chase.loanUtil.LoanNotFoundException;
 import com.chase.repository.LoansRepository;
@@ -61,8 +62,8 @@ public class LoansServiceImpl implements LoansService{
 		linkedList.add("Test-Linked");
 		long endLinked = System.nanoTime();
 		
-		System.out.println("ArrayList operation time" +(endArray - startArray)+" ns");
-		System.out.println("LinkedList operation time" +(endLinked - startLinked)+" ns");
+		//System.out.println("ArrayList operation time" +(endArray - startArray)+" ns");
+		//System.out.println("LinkedList operation time" +(endLinked - startLinked)+" ns");
 		}
 		//catch(NumberFormatException e) {
 			//GlobalExceptionHandler.IllegalArgumentException(new IllegalArgumentException("Invalid Input", e));
@@ -78,10 +79,24 @@ public class LoansServiceImpl implements LoansService{
 		if(loan.getEmail() == null || !loan.getEmail().contains("@"))
 		{
 			System.out.println("Loan having invalid emial format");
-			throw new LoanNotFoundException("Loan having invalid email format ot emial is null");
+			throw new LoanNotFoundException("Loan having invalid email format or emial is null");
 			/* prints WARN 12388 --- [Chase_Service] [nio-8080-exec-7] .m.m.a.ExceptionHandlerExceptionResolver 
 			  : Resolved [com.chase.loanUtil.LoanNotFoundException: Loan having invalid email format ot emial is null]*/
 		}
+		Runnable emailtask = new EmailNotificationTask(loan.getLoanType(), loan.getEmail());
+		new Thread(emailtask).start();
+		/*Thread emailThread = new Thread(emailtask);
+		emailThread.start();
+
+		try {
+		    Thread.sleep(1000); // Give the thread time to start and reach sleep
+		} catch (InterruptedException e) {
+		    e.printStackTrace();
+		}
+
+		emailThread.interrupt();*/
+		
+
 		
 		
 		if ( loan.getLoanType() == null) {

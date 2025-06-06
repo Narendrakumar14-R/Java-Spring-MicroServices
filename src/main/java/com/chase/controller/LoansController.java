@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chase.entity.Loans;
+import com.chase.loanUtil.EmailNotificationTask;
+import com.chase.loanUtil.FraudCheckTask;
 import com.chase.service.LoansService;
 
 @RestController
@@ -24,6 +26,10 @@ public class LoansController {
 	
 	@PostMapping("/addLoans")
 	public Loans addLoans(@RequestBody Loans loan) {
+		
+		Runnable fraudcheck = new FraudCheckTask(loan.getEmail());
+		new Thread(fraudcheck).start();
+		
 		return loanService.addLoans(loan);	
 	}
 	
