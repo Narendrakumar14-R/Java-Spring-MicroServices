@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.chase.entity.Loans;
 import com.chase.loanUtil.EmailNotificationTask;
+import com.chase.loanUtil.EmailTask;
 import com.chase.loanUtil.GlobalExceptionHandler;
 import com.chase.loanUtil.LoanNotFoundException;
 import com.chase.repository.LoansRepository;
@@ -31,11 +32,13 @@ public class LoansServiceImpl implements LoansService{
 	
 	@Autowired
 	LoansRepository loansRepository;
-	 
+	 @Autowired
+	 EmailTask emailTask;
 
 	@Override
 	public Loans addLoans(Loans loan) {
 		// TODO Auto-generated method stub
+		 emailTask.sendWelcomeMail(loan.getLoanType(), loan.getEmail());
 		
 		try {
 			
