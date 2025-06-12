@@ -2,6 +2,7 @@ package com.chase.service;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -22,6 +23,7 @@ import com.chase.loanUtil.EmailNotificationTask;
 import com.chase.loanUtil.EmailTask;
 import com.chase.loanUtil.GlobalExceptionHandler;
 import com.chase.loanUtil.LoanNotFoundException;
+import com.chase.loanUtil.LoanTypeComparator;
 import com.chase.repository.LoansRepository;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
@@ -36,7 +38,7 @@ public class LoansServiceImpl implements LoansService{
 	 EmailTask emailTask;
 
 	@Override
-	public Loans addLoans(Loans loan) {
+	public Loans addLoans(Loans loan) { 
 		// TODO Auto-generated method stub
 		 emailTask.sendWelcomeMail(loan.getLoanType(), loan.getEmail());
 		
@@ -65,8 +67,8 @@ public class LoansServiceImpl implements LoansService{
 		linkedList.add("Test-Linked");
 		long endLinked = System.nanoTime();
 		
-		//System.out.println("ArrayList operation time" +(endArray - startArray)+" ns");
-		//System.out.println("LinkedList operation time" +(endLinked - startLinked)+" ns");
+		System.out.println("ArrayList operation time" +(endArray - startArray)+" ns");
+		System.out.println("LinkedList operation time" +(endLinked - startLinked)+" ns");
 		}
 		//catch(NumberFormatException e) {
 			//GlobalExceptionHandler.IllegalArgumentException(new IllegalArgumentException("Invalid Input", e));
@@ -173,6 +175,10 @@ public class LoansServiceImpl implements LoansService{
 					System.out.println("The loan are in active staus");
 				}
 			} );
+			Collections.sort(loans);
+			loans.sort(new LoanTypeComparator());
+		
+		return loans;
 		}
 		
 		return null;

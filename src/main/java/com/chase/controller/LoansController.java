@@ -10,25 +10,39 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chase.entity.Loans;
 import com.chase.loanUtil.EmailNotificationTask;
 import com.chase.loanUtil.FraudCheckTask;
+import com.chase.loanUtil.JwtUtil;
 import com.chase.service.LoansService;
 
 @RestController
-@RequestMapping
+@RequestMapping("/loan")
 public class LoansController {
 
 	@Autowired
 	LoansService loanService;
+	@Autowired
+	JwtUtil jwtUtil;
+	
+	@PostMapping("/userlogin")
+	public String login(@RequestParam String username, @RequestParam String password) {
+		if("admin".equals(username) && "admin123".equals(password)) {
+			return jwtUtil.generateToken(username);
+			
+		} else {
+			throw new RuntimeException("Invalid Credentails");
+		}
+	}
 	
 	@PostMapping("/addLoans")
 	public Loans addLoans(@RequestBody Loans loan) {
 		
-		Runnable fraudcheck = new FraudCheckTask(loan.getEmail());
-		new Thread(fraudcheck).start();
+		//Runnable fraudcheck = new FraudCheckTask(loan.getEmail());
+		//new Thread(fraudcheck).start();
 		
 		return loanService.addLoans(loan);	
 	}
