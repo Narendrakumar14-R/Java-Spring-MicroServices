@@ -1,0 +1,18 @@
+server:
+ port: 9090
+spring:
+ application:
+  name: pnc-service
+ kafka:
+  bootstrap-servers: host.docker.internal:9092
+  consumer:
+     group-id: my-group
+     auto-offset-reset: earliest
+     key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+     value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+eureka:
+  client:
+    service-url:
+      defaultZone: http://host.docker.internal:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
