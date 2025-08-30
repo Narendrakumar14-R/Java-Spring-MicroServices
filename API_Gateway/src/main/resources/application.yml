@@ -1,0 +1,34 @@
+server:
+ port: 8888
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+
+spring:
+ application:
+  name: APIGateway
+ main:
+  web-application-type: reactive
+ web:
+  resources:
+   add-mappings: false
+
+ cloud:
+  gateway:
+   routes:
+     - id: chase
+       uri: lb://CHASESERVICE
+       predicates:
+        - Path=/loan/**
+
+     - id: pnc
+       uri: lb://PNCSERVICE
+       predicates:
+        - Path=/pnc/customers/**
+ discovery:
+  locator:
+   enabled: true
+  lower-case-service-id: true
